@@ -33,6 +33,7 @@ import {
 import { ColorModeSwitcher } from './ColorModeSwitcher'
 import ClientTable from './components/ClientTable'
 import ClientForm from './components/ClientForm'
+import ClientAccess from './components/ClientAccess'
 import { ClientStore } from 'dcr-client'
 
 // const MyComponent = () => {
@@ -61,7 +62,12 @@ import { ClientStore } from 'dcr-client'
 
 export const App = () => {
   const [tabIndex, setTabIndex] = React.useState<number | number[]>(0)
-  const [client, setClient] = React.useState<ClientStore.Client>()
+  const [client, setClientInternal] = React.useState<ClientStore.Client>()
+
+  const setClient = (c: ClientStore.Client) => {
+    setTabIndex(2)
+    setClientInternal(c)
+  }
 
   React.useEffect(() => {
     if (client) {
@@ -71,7 +77,7 @@ export const App = () => {
 
   return (
     <ChakraProvider theme={theme}>
-      <Box fontSize='xl'>
+      <Box>
         <Flex>
           <Box as='header' mx={'4px'} mt={'4px'}>
             SMART Dynamic Client App
@@ -122,7 +128,7 @@ export const App = () => {
               {!client ? (
                 <Text>No client found. Please choose or register a client</Text>
               ) : (
-                <pre>{JSON.stringify(client)}</pre>
+                <ClientAccess client={client} />
               )}
             </AccordionPanel>
           </AccordionItem>
