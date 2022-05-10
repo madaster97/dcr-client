@@ -45,8 +45,8 @@ const dbPromise = openDB<ClientDBSchema>('dcr-client', 1, {
 export async function get(key: PrimaryKeyObject) {
     return (await dbPromise).get('clients', serializePrimaryKey(key));
 };
-export async function set(key: PrimaryKeyObject, val: Client) {
-    return (await dbPromise).put('clients', val, serializePrimaryKey(key));
+export async function set(val: Client) {
+    return (await dbPromise).put('clients', val);
 };
 export async function del(key: PrimaryKeyObject) {
     return (await dbPromise).delete('clients', serializePrimaryKey(key));

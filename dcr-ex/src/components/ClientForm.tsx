@@ -62,7 +62,36 @@ const ClientForm: React.FC<{
   const [sub, setSub] = React.useState<string>()
 
   return (
-    <form onSubmit={e => e.preventDefault()}>
+    <form
+      onSubmit={e => {
+        e.preventDefault()
+        if (!!data && !!clientId && !!tokenEndpoint) {
+          const client_id = clientId
+          const token_endpoint = tokenEndpoint
+          const { kid, privateKey, publicKey } = data
+          const newClient = {
+            client_id,
+            token_endpoint,
+            creationTime: new Date(),
+            extra: {
+              iss,
+              patient
+            },
+            kid,
+            privateKey,
+            publicKey,
+            sub: sub || 'Unknown'
+          }
+          ClientStore.set(newClient)
+            .then(() => {
+              chooseClient(newClient)
+            })
+            .catch(e => {
+              window.alert(e.message)
+            })
+        }
+      }}
+    >
       <FormControl isInvalid={!!error} isRequired>
         <FormLabel htmlFor='kid'>Public-Private Key Pair</FormLabel>
         <Input
@@ -106,7 +135,9 @@ const ClientForm: React.FC<{
           Below fields are <Text as='em'>optional</Text>
         </FormHelperText>
       </InputComponent>
-      <Button type='submit'>Submit</Button>
+      <Button type='submit' isDisabled={!data || !clientId || !tokenEndpoint}>
+        Submit
+      </Button>
       <Divider my={'4px'} />
       <InputComponent
         callback={setFhirUser}
