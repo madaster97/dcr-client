@@ -5,7 +5,7 @@ import { KeyAlg } from "./register";
 import { checkIsString, getNotStringError } from "./typeChecks";
 
 type TokenResponseContext = Record<string, string | number>;
-const grant =
+export const grant =
     async (client_id: string, token_endpoint: string, privateKey: jose.KeyLike, kid: string, alg: KeyAlg):
         Promise<{
             readonly access_token: string,
@@ -56,4 +56,3 @@ const grant =
             context
         }
     }
-export default grant;

@@ -18,7 +18,7 @@ const createKeys = async (alg: KeyAlg) => jose.generateKeyPair(alg, { extractabl
         }
     });
 
-const register =
+export const register =
     async (
         initial_access_token: string,
         registration_endpoint: string,
@@ -55,4 +55,3 @@ const register =
             metadata
         }
     }
-export default register;
