@@ -1,29 +1,12 @@
 import * as React from 'react'
-import { useAsync } from 'react-async'
 import {
   ChakraProvider,
   Box,
   Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
   theme,
-  Textarea,
-  ButtonGroup,
   Heading,
   Spacer,
-  Button,
-  useClipboard,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-  Divider,
-  Flex
-} from '@chakra-ui/react'
-import {
+  Flex,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -35,30 +18,6 @@ import ClientTable from './components/ClientTable'
 import ClientForm from './components/ClientForm'
 import ClientAccess from './components/ClientAccess'
 import { ClientStore } from 'dcr-client'
-
-// const MyComponent = () => {
-//   const { data, error, isPending } = useAsync(promiseFn)
-//   const { hasCopied, onCopy } = useClipboard(data || '')
-
-//   if (isPending) return <>{'Loading...'}</>
-//   if (error) return <>{`Something went wrong: ${error.message}`}</>
-//   return (
-//     <VStack>
-//       <Flex minWidth='max-content' alignItems='center' gap='2'>
-//         <Box p='2'>
-//           <Heading size='md'>Copy Public Key</Heading>
-//         </Box>
-//         <Spacer />
-//         <ButtonGroup gap='2'>
-//           <Button colorScheme='teal' isDisabled={!!error} onClick={onCopy}>
-//             {hasCopied ? 'Copied' : 'Copy'}
-//           </Button>
-//         </ButtonGroup>
-//       </Flex>
-//       <Textarea isReadOnly resize='vertical' value={data} h='210px' />
-//     </VStack>
-//   )
-// }
 
 export const App = () => {
   const [tabIndex, setTabIndex] = React.useState<number | number[]>(0)
@@ -133,36 +92,6 @@ export const App = () => {
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
-
-        {/* <Tabs
-          as='nav'
-          variant='enclosed'
-          index={tabIndex}
-          onChange={handleTabsChange}
-        >
-          <TabList>
-            <Tab>Search Clients</Tab>
-            <Tab>Register New Client</Tab>
-            <Tab isDisabled={!client}>Request Access</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <ClientTable
-                chooseClient={c => {
-                  setClient(c)
-                  setTabIndex(2)
-                }}
-                clients={[]}
-              />
-            </TabPanel>
-            <TabPanel>
-              <p>two!</p>
-            </TabPanel>
-            <TabPanel>
-              {!!client ? <MyComponent /> : <Text>No client!</Text>}
-            </TabPanel>
-          </TabPanels>
-        </Tabs> */}
       </Box>
     </ChakraProvider>
   )
