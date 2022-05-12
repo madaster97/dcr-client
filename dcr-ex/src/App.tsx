@@ -13,6 +13,13 @@ import {
   AccordionPanel,
   AccordionIcon
 } from '@chakra-ui/react'
+import {
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  TagRightIcon,
+  TagCloseButton
+} from '@chakra-ui/react'
 import { ColorModeSwitcher } from './ColorModeSwitcher'
 import ClientTable from './components/ClientTable'
 import ClientForm from './components/ClientForm'
@@ -23,16 +30,15 @@ export const App = () => {
   const [tabIndex, setTabIndex] = React.useState<number | number[]>(0)
   const [client, setClientInternal] = React.useState<ClientStore.Client>()
 
+  const unsetClient = () => {
+    setClientInternal(undefined)
+    setTabIndex([])
+  }
+
   const setClient = (c: ClientStore.Client) => {
     setTabIndex(2)
     setClientInternal(c)
   }
-
-  React.useEffect(() => {
-    if (client) {
-      setTabIndex(2)
-    }
-  }, [client])
 
   return (
     <ChakraProvider theme={theme}>
@@ -87,7 +93,18 @@ export const App = () => {
               {!client ? (
                 <Text>No client found. Please choose or register a client</Text>
               ) : (
-                <ClientAccess client={client} />
+                <>
+                  <Tag
+                    size={'md'}
+                    borderRadius='full'
+                    variant='solid'
+                    colorScheme='green'
+                  >
+                    <TagLabel>{client.client_id}</TagLabel>
+                    <TagCloseButton onClick={unsetClient} />
+                  </Tag>
+                  <ClientAccess client={client} />
+                </>
               )}
             </AccordionPanel>
           </AccordionItem>
