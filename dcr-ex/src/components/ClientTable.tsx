@@ -8,7 +8,8 @@ import {
   Th,
   Td,
   Tbody,
-  Text
+  Text,
+  Button
 } from '@chakra-ui/react'
 import { ClientStore } from 'dcr-client'
 import { useAsync } from 'react-async'
@@ -16,7 +17,9 @@ import { useAsync } from 'react-async'
 const ClientTable: React.FC<{
   chooseClient: (c: ClientStore.Client) => void
 }> = ({ chooseClient }) => {
-  const { data: clients, error, isPending } = useAsync(ClientStore.getAll)
+  const { data: clients, error, isPending, reload } = useAsync(
+    ClientStore.getAll
+  )
   if (isPending) return <Text>Loading clients...</Text>
   if (error)
     return <Text>Something went wrong fetching clients: {error.message}</Text>
@@ -25,7 +28,10 @@ const ClientTable: React.FC<{
       <TableContainer>
         <Table variant='striped' colorScheme='teal' size='sm'>
           <TableCaption placement='top'>
-            List of clients saved on this device
+            List of clients saved on this device.{' '}
+            <Button size='sm' onClick={reload}>
+              Refresh clients
+            </Button>
           </TableCaption>
           <Thead>
             <Tr>
