@@ -11,7 +11,9 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-  AccordionIcon
+  AccordionIcon,
+  RadioGroup,
+  Radio
 } from '@chakra-ui/react'
 import {
   Tag,
@@ -24,11 +26,17 @@ import { ColorModeSwitcher } from './ColorModeSwitcher'
 import ClientTable from './components/ClientTable'
 import ClientForm from './components/ClientForm'
 import ClientAccess from './components/ClientAccess'
+import ClientLaunch from './components/ClientLaunch'
 import { ClientStore } from 'dcr-client'
 
-export const App = () => {
+export const App: React.FC<{ newClient?: ClientStore.Client }> = ({
+  newClient
+}) => {
   const [tabIndex, setTabIndex] = React.useState<number | number[]>(0)
-  const [client, setClientInternal] = React.useState<ClientStore.Client>()
+  const [client, setClientInternal] = React.useState<
+    ClientStore.Client | undefined
+  >(newClient)
+  const [regMode, setRegMode] = React.useState<string>('launch')
 
   const unsetClient = () => {
     setClientInternal(undefined)
@@ -76,7 +84,15 @@ export const App = () => {
               </AccordionButton>
             </Heading>
             <AccordionPanel pb={4}>
-              <ClientForm chooseClient={setClient} />
+              <RadioGroup onChange={setRegMode} value={regMode}>
+                <Radio value='manual'>Manually Register</Radio>
+                <Radio value='launch'>Register with Launch</Radio>
+              </RadioGroup>
+              {regMode === 'launch' ? (
+                <ClientLaunch />
+              ) : (
+                <ClientForm chooseClient={setClient} />
+              )}
             </AccordionPanel>
           </AccordionItem>
 
