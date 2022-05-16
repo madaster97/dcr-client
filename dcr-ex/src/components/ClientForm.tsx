@@ -25,7 +25,7 @@ const createNewKeys = async () => {
     publicKey,
     privateKey,
     kid,
-    jwksString: JSON.stringify({ jwks: [jwk] }, null, 2)
+    jwksString: JSON.stringify({ keys: [jwk] }, null, 2)
   }
 }
 
